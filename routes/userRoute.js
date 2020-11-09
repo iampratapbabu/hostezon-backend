@@ -10,6 +10,7 @@ router.route("/logout").get(authController.logout);
 
 router.route("/forgot-password").post(authController.forgotPassword);
 router.route("/reset-password/:token").patch(authController.resetPassword);
+router.route('/me').get(authController.protect,userController.getMe,userController.getUser);
 router.route('/update-me').patch(authController.protect,userController.updateMe);
 router.route('/update-password').patch(authController.protect,authController.updatePassword);
 router.route('/delete-me').delete(authController.protect,userController.deleteMe);

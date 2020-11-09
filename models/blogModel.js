@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Comment = require('./commentsModel');
+
 
 
 const blogSchema = new mongoose.Schema({
@@ -35,11 +37,65 @@ const blogSchema = new mongoose.Schema({
     tags:{
         type:String,
     },
+
     createdAt:{
         type:Date,
         default:Date.now()
+    },
+    createdBy:
+    {
+         type:mongoose.Schema.Types.ObjectId,
+         ref:'User'
+    },
+    likes:[
+        {
+            user:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'User',
+            }
+        }
+    ],
+    comments:[
+    {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Comment'
     }
+    ]
+   
+
+    
 });
+
+
+//virtual populating comments
+// blogSchema.virtual('comments',{
+//     ref:'Comment',
+//     foreignField:'blog',
+//     localField:'_id'
+// });
+
+
+//comment populating
+blogSchema.pre(/^find/,function(next){     
+    this.populate({                        
+        path:'comments'                     
+    })
+    next();
+})
+
+
+//user populating
+blogSchema.pre(/^find/,function(next){
+    this.populate({
+        path:'createdBy',
+        select:'-__v -email -gender'
+    });
+    next();
+});
+
+
+
+
 
 const Blog = mongoose.model('Blog',blogSchema);
 

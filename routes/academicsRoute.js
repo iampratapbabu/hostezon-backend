@@ -12,8 +12,11 @@ router.route('/syllabus')
 .post(academicsController.createOne);
 
 router.route('/:branch/:year/:semester')
-	.get(authController.protect,academicsController.singleBranch)
-	.patch(authController.protect,academicsController.updateSingleBranch);
+	.get(academicsController.singleBranch)
+	.patch(academicsController.updateSingleBranch);
+
+	// .get(authController.protect,academicsController.singleBranch)    ye code production ke liye
+	// .patch(authController.protect,academicsController.updateSingleBranch);
 
 
 

@@ -7,15 +7,15 @@ const router = express.Router();
 router.route('/top-5-blogs').get(blogController.topBlogs,blogController.getAllBlogs)
 
 router.route('/').get(blogController.getAllBlogs)
-router.route('/create-blog').post(blogController.createBlog);
+router.route('/create-blog').post(authController.protect,blogController.createBlog);
 
 router.route('/:slug')
-	.get(blogController.getBlog)   //isme findOneAndUpdate() use krenge
-	.patch(blogController.updateBlog)
+	.get(blogController.getBlog)   //isme findOneAndUpdate({slug:req.params.slug}) use krenge jisme object ki tarah 
+	.patch(blogController.updateBlog)  //parameter pass krte hai eb.
 	
 
- router.route('/:id')    //agar id se search karna chahte hain then ise use kr skte haint
- 	.get(blogController.getBlog)     //isme Blog.findByIdAndUpdate() use krenge
+ router.route('/single/:id')    //agar id se search karna chahte hain then ise use kr skte haint
+ 	.get(blogController.getSingleBlog)     //isme Blog.findByIdAndUpdate() use krenge
 	.patch(blogController.updateBlog)  
  	.delete(blogController.deleteBlog);   
     

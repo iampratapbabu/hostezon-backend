@@ -1,4 +1,6 @@
 const Blog = require('../models/blogModel');
+const Comment = require('../models/commentsModel');
+
 const slugify = require('slugify');
 
 exports.topBlogs = async(req,res,next) =>{
@@ -76,7 +78,8 @@ exports.createBlog = async (req,res) =>{
             views:req.body.views,
             rating:req.body.rating,
             tags:req.body.tags,
-            createdAt:req.body.createdAt
+            createdAt:req.body.createdAt,
+            createdBy:req.user.id
 
 
         });
@@ -95,10 +98,32 @@ exports.createBlog = async (req,res) =>{
     }
 }
 
+exports.getSingleBlog = async (req,res) =>{
+    try{
+         // console.log(req.params.slug);
+        const blog = await Blog.findById(req.params.id);
+        // console.log(blog);
+        // res.json({blog});
+        res.status(200).json({
+            status:"succc555ess",
+            blog
+        });
+       
+    }catch (error) {
+        res.status(400).json({
+            status:"fail",
+            message:"Error occured code directly runs in catch block",
+            Error:error
+        });
+    }
+}
+
+
 exports.getBlog = async (req,res) =>{
     try{
         // console.log(req.params.slug);
-        const blog = await Blog.findOne({slug:req.params.slug});
+        const blog = await Blog.findOne({
+            slug:req.params.slug}).populate('comments');// yaha se bhi populate kar skte hain  .populate('createdBy') laga ke
         // console.log(blog);
         // res.json({blog});
         res.status(200).json({
@@ -110,9 +135,13 @@ exports.getBlog = async (req,res) =>{
             status:"fail",
             message:"Error occured code directly runs in catch block",
             Error:error
-        })
+        });
     }
 }
+
+
+
+
 
 exports.updateBlog = async (req,res) =>{
     try{

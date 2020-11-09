@@ -112,6 +112,7 @@ exports.protect = async (req, res, next) => {
       })
     }
   req.user = currentUser;
+  // console.log("req finished of protect");
   next();
 
   } catch (err) {

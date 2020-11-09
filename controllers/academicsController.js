@@ -18,7 +18,7 @@ exports.getAll = async(req,res) =>{
 
 exports.singleBranch = async(req,res) =>{
 	try{
-		console.log(req.params.branch);
+		
 		const branch = await Academics.find({
 			branch:req.params.branch,
 			year:req.params.year,
