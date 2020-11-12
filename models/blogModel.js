@@ -54,34 +54,34 @@ const blogSchema = new mongoose.Schema({
                 ref:'User',
             }
         }
-    ],
-    comments:[
-    {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Comment'
-    }
     ]
+    
    
 
     
-});
+}, //ye hemsa yahin likhte hain kuki ye kisi model ka part nhi
+   {
+        toJSON:{virtuals:true},
+        toObject:{virtuals:true}
+    }
+);
 
 
 //virtual populating comments
-// blogSchema.virtual('comments',{
-//     ref:'Comment',
-//     foreignField:'blog',
-//     localField:'_id'
-// });
+blogSchema.virtual('comments',{
+    ref:'Comment',
+    foreignField:'blog',
+    localField:'_id'
+});
 
 
 //comment populating
-blogSchema.pre(/^find/,function(next){     
-    this.populate({                        
-        path:'comments'                     
-    })
-    next();
-})
+// blogSchema.pre(/^find/,function(next){     
+//     this.populate({                        
+//         path:'comments'                     
+//     })
+//     next();
+// })
 
 
 //user populating

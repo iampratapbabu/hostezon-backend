@@ -29,13 +29,23 @@ const commentSchema = new mongoose.Schema({
     
    
 
-});
+},
+	{
+        toJSON:{virtuals:true},
+        toObject:{virtuals:true}
+    }
+);
 
 commentSchema.pre(/^find/,function(next){
+	// this.populate({
+	// 	path:'blog',
+	// 	select:'title'     			//ye basically blogs and user dono ko populatee krne ke liye hai
+	// }).populate({	   			// lekin jb comment virtual populate kr rhe hain then blog phr se 
+	// 	path:'user',	  			// populate ho ja rha hai isiliye sirf user ko populate kiye 
+	// 	select:'name email role'   // lekin as a refrence ye code comment kiye jisse dono ek sath 
+	// })						  // populte kr skte hain.
+
 	this.populate({
-		path:'blog',
-		select:'title'
-	}).populate({
 		path:'user',
 		select:'name email role'
 	})

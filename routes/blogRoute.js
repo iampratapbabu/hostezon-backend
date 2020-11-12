@@ -16,8 +16,10 @@ router.route('/:slug')
 
  router.route('/single/:id')    //agar id se search karna chahte hain then ise use kr skte haint
  	.get(blogController.getSingleBlog)     //isme Blog.findByIdAndUpdate() use krenge
-	.patch(blogController.updateBlog)  
- 	.delete(blogController.deleteBlog);   
+	.patch(blogController.updateSingleBlog)  
+ 	.delete(blogController.deleteSingleBlog);   
+
+ 	
     
     
 

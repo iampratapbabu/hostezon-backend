@@ -98,25 +98,6 @@ exports.createBlog = async (req,res) =>{
     }
 }
 
-exports.getSingleBlog = async (req,res) =>{
-    try{
-         // console.log(req.params.slug);
-        const blog = await Blog.findById(req.params.id);
-        // console.log(blog);
-        // res.json({blog});
-        res.status(200).json({
-            status:"succc555ess",
-            blog
-        });
-       
-    }catch (error) {
-        res.status(400).json({
-            status:"fail",
-            message:"Error occured code directly runs in catch block",
-            Error:error
-        });
-    }
-}
 
 
 exports.getBlog = async (req,res) =>{
@@ -124,7 +105,7 @@ exports.getBlog = async (req,res) =>{
         // console.log(req.params.slug);
         const blog = await Blog.findOne({
             slug:req.params.slug}).populate('comments');// yaha se bhi populate kar skte hain  .populate('createdBy') laga ke
-        // console.log(blog);
+        // console.log(blog);                           //bt abhi comment ko populate kar rahe hain kuki virtual populate kiye hain comment model me
         // res.json({blog});
         res.status(200).json({
             status:"succcess",
@@ -189,6 +170,70 @@ exports.deleteBlog = async (req,res) =>{
             message:"Error occured code directly runs in catch block",
             Error:error
         })
+    }
+}
+
+
+/////////// with using of ids
+
+exports.getSingleBlog = async (req,res) =>{
+    try{
+         // console.log(req.params.slug);
+        const blog = await Blog.findById(req.params.id).populate('comments');
+        // console.log(blog);
+        // res.json({blog});
+        res.status(200).json({
+            status:"succc555ess",
+            blog
+        });
+       
+    }catch (error) {
+        res.status(400).json({
+            status:"fail",
+            message:"Error occured code directly runs in catch block",
+            Error:error
+        });
+    }
+}
+
+exports.updateSingleBlog = async (req,res) =>{
+    try{
+         // console.log(req.params.slug);
+        const blog = await Blog.findByIdAndUpdate(req.params.id,req.body,{new:true});
+        // console.log(blog);
+        // res.json({blog});
+        res.status(200).json({
+            status:"succc555ess",
+            blog
+        });
+       
+    }catch (error) {
+        res.status(400).json({
+            status:"fail",
+            message:"Error occured code directly runs in catch block",
+            Error:error
+        });
+    }
+}
+
+
+exports.deleteSingleBlog = async (req,res) =>{
+    try{
+         // console.log(req.params.slug);
+        const blog = await Blog.findByIdAndDelete(req.params.id);
+        // console.log(blog);
+        // res.json({blog});
+        res.status(200).json({
+            status:"succc555ess",
+            
+        });
+       
+    }catch (error) {
+        res.status(400).json({
+            status:"fail",
+            message:"Error occured code directly runs in catch block",
+            Error:error
+        });
     }
 }
 

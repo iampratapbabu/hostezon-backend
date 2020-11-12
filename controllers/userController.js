@@ -88,6 +88,7 @@ exports.deleteUser = async (req, res) => {
 //find karenge and delete ka method lagayenge
 exports.getMe = (req,res,next) =>{
   req.params.id = req.user.id
+  console.log(req.params.id);
   next();
 }
 
@@ -128,4 +129,10 @@ exports.updateMe = async(req,res,next) =>{
 
 
 
+exports.myRoute = (req,res) =>{
+  res.status(200).json({
+    status:"Success",
+    msg:"My Route is working"
+  });
+}
 

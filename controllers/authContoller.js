@@ -72,7 +72,7 @@ exports.logout = (req, res) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true
   });
-  res.status(200).json({ status: 'success' });
+  res.status(200).json({ status: 'logged out successfully' });
 };
 
 
@@ -124,8 +124,9 @@ exports.protect = async (req, res, next) => {
 };
 
 exports.testRoute = (req,res,next) =>{
-  console.log(req.user.role);
-  res.send("success")
+  
+  res.send("success");
+  console.log("done in test route");
 }
 
 //in dono controllers ke jagah protect middleware hi kaam aayega usi se req.user.role extract kar
