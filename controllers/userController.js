@@ -118,6 +118,10 @@ exports.updateMe = async(req,res,next) =>{
     }
 
     await User.findByIdAndUpdate(req.user.id,req.body,{new:true})
+    res.status(200).json({
+      status:"success",
+      msg:"Updated successfully"
+    });
 
   }catch(err){
     res.status(400).json({
