@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require('bcrypt');
+const crypto = require("crypto");  //This is built in in node_module
 
 
 const userSchema = new mongoose.Schema({
@@ -58,7 +59,7 @@ userSchema.pre('save',async function(next){
   if(!this.isModified('password')) return next();
 
   this.password = await bcrypt.hash(this.password,12);
-  this.passwordConfirm = undefined;
+  this.passwordConfirm = undefined;  //undefined kr dene se ye database me save nahi hoga
   next();
 
 });
@@ -77,6 +78,23 @@ userSchema.methods.changedPasswordAfter = function(JWTTimestamp){
     return JWTTimestamp < changedTimeStamp;
   }
   return false;
+}
+
+
+//creating token for forget password
+userSchema.methods.createPasswordResetToken = function(){
+  //creating the reset token
+  const resetToken = crypto.randomBytes(32).toString('hex');
+
+  //hashing the token
+  this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+  console.log({resetToken},this.passwordResetToken);
+
+  //setting the token expire time
+  this.passwordResetExpires = Date.now() + 15 *60*1000;
+
+  return resetToken;
+
 }
 
 const User = mongoose.model("User", userSchema);

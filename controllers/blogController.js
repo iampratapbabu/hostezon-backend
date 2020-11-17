@@ -174,7 +174,7 @@ exports.deleteBlog = async (req,res) =>{
 }
 
 
-/////////// with using of ids
+/////////// with using of ids/////////////////////////////////////
 
 exports.getSingleBlog = async (req,res) =>{
     try{

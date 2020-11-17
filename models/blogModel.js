@@ -75,13 +75,6 @@ blogSchema.virtual('comments',{
 });
 
 
-//comment populating
-// blogSchema.pre(/^find/,function(next){     
-//     this.populate({                        
-//         path:'comments'                     
-//     })
-//     next();
-// })
 
 
 //user populating

@@ -4,7 +4,8 @@ const authController = require('../controllers/authContoller');
 
 
 
-const router = express.Router();
+const router = express.Router({mergeParams:true});  //mergeParams:true kiye taki
+													// /:blogId yaha pe accesible ho ske
 
 router.route('/')
 .get(commentController.getAllComment)

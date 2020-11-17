@@ -19,7 +19,6 @@ router.route("/logout").get(authController.logout);
 
 //These routes are mainly for development
 router.route('/test-route').get(authController.protect,authController.testRoute);
-router.route("/my-route").get(userController.myRoute);
 
 
 //in routes ko jinme / ya /:id type ke ho inko neche rakha jata hai

@@ -1,6 +1,9 @@
 const User = require("../models/userModel");
 const jwt = require('jsonwebtoken');
 const {promisify} = require('util');
+const crypto = require('crypto');
+
+const sendEmail = require('../utils/email');
 
 
 exports.signup = async (req, res) => {
@@ -219,24 +222,99 @@ exports.updatePassword = async(req,res,next) =>{
 
 
 
-exports.forgotPassword = async (req, res) => {
-  try {
-    res.send("this is forget password route");
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: err,
-    });
-  }
+exports.forgotPassword = async (req,res,next) =>{
+//getting user
+const user = await User.findOne({email:req.body.email});
+if(!user){
+  return res.status(404).json({
+    status:"fail",
+    message:"No user found with this email"
+  });
+}
+
+//generating reset resetToken
+const resetToken = user.createPasswordResetToken();
+
+await user.save({validateBeforeSave:false})
+
+//sending to user's email
+const resetUrl = `${req.protocol}://${req.get('host')}/hostezon/v1/users/reset-password/${resetToken}`;
+
+const message = `Forgot your password Click here to Reset ${resetUrl}.\n if You dont  then ignore`;
+
+
+try{
+  await sendEmail({
+    email:user.email,
+    subject:"Your Password reset token",
+    message
+  });
+
+  res.status(200).json({
+    status:"success",
+    message:"Reset Token sent to your email"
+  })
+}catch(err){
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  res.status(400).json({
+    status:"fail",
+    message:err
+  });
+}
+
+
 };
 
-exports.resetPassword = async (req, res) => {
-  try {
-    res.send("this is reset password route");
-  } catch (err) {
+//reset password controller
+exports.resetPassword = async (req,res,next) =>{
+  try{
+
+    //encrypting our token to match with database stored passwordresetToken
+    const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+   
+    //getting user by hashed token
+    const user = await User.findOne({
+      passwordResetToken:hashedToken,passwordResetExpires:{$gte:Date.now()}
+    });
+
+    if(!user){
+      return res.status(404).json({
+        status:"fail",
+        message:"User not found"
+      });
+    }
+
+
+    //setting the new password
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+
+    await user.save();
+
+
+    const token = jwt.sign({id:user._id},process.env.JWT_SECRET,{
+    expiresIn:process.env.EXPIRES_IN
+    });
+
+
+    res.status(200).json({
+    status:"success",
+    token,
+    message:"password successfully changed"
+    });
+
+
+
+  }catch(err){
+    console.log(err);
     res.status(400).json({
-      status: "fail",
-      message: err,
+      status:"fail",
+      message:err
     });
   }
-};
+
+}
+

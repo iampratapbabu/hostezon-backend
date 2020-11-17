@@ -2,7 +2,14 @@ const express = require("express");
 const authController = require('../controllers/authContoller');
 const blogController = require("../controllers/blogController");
 
+const commentRouter = require('../routes/commentRoute');     //yaha pe router.use as a middleware use krenge 
+															//jaisa app.js me kiya tha baki routes me
 const router = express.Router();
+
+
+router.use('/:blogId/comments',commentRouter); //cooment router me request chala jayega
+	
+
 
 router.route('/top-5-blogs').get(blogController.topBlogs,blogController.getAllBlogs)
 
@@ -14,10 +21,11 @@ router.route('/:slug')
 	.patch(blogController.updateBlog)  //parameter pass krte hai eb.
 	
 
- router.route('/single/:id')    //agar id se search karna chahte hain then ise use kr skte haint
+router.route('/single/:id')    //agar id se search karna chahte hain then ise use kr skte haint
  	.get(blogController.getSingleBlog)     //isme Blog.findByIdAndUpdate() use krenge
 	.patch(blogController.updateSingleBlog)  
- 	.delete(blogController.deleteSingleBlog);   
+ 	.delete(blogController.deleteSingleBlog);
+
 
  	
     

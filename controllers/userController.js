@@ -99,7 +99,7 @@ exports.deleteMe = async (req,res,next) =>{
     res.status(200).json({
       message:"User has been deleted succcessfully",
       data:null
-    })
+    });
   }catch(err){
     res.status(400).json({
       status:"fail",
@@ -133,10 +133,4 @@ exports.updateMe = async(req,res,next) =>{
 
 
 
-exports.myRoute = (req,res) =>{
-  res.status(200).json({
-    status:"Success",
-    msg:"My Route is working"
-  });
-}
 
