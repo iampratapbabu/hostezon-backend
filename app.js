@@ -1,4 +1,7 @@
 const express = require("express");
+const morgan = require('morgan');
+
+
 const userRouter = require("./routes/userRoute");
 const blogRouter = require("./routes/blogRoute");
 const academicsRouter = require("./routes/academicsRoute");
@@ -10,6 +13,11 @@ const commentRouter = require('./routes/commentRoute');
 
 const app = express();
 app.use(express.json()); //very necessary
+
+//MIDDLEWARES
+if(process.env.NODE_ENV="development"){
+	app.use(morgan('dev'));
+}
 
 //for making request without error with react
 app.use((req,res,next) =>{

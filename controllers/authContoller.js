@@ -255,6 +255,7 @@ try{
     message:"Reset Token sent to your email"
   })
 }catch(err){
+  console.log(err);
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
   res.status(400).json({
