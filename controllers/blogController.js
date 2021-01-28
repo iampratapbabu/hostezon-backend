@@ -163,7 +163,10 @@ exports.deleteBlog = async (req,res) =>{
     try{
 
         const blog = await Blog.findOneAndDelete(req.params.slug);
-        res.json("successfully deleted")
+        res.status(200).json({
+            status:"successfully deleted",
+            blog:null
+        })
     }catch (error) {
         res.status(400).json({
             status:"fail",
@@ -179,7 +182,12 @@ exports.deleteBlog = async (req,res) =>{
 exports.getSingleBlog = async (req,res) =>{
     try{
          // console.log(req.params.slug);
-        const blog = await Blog.findById(req.params.id).populate('comments');
+        const blog = await Blog.findById(req.params.id).populate('comments'); 
+
+        // yaha se bhi populate kar skte hain  .populate('createdBy') laga ke
+        //bt abhi comment ko populate kar rahe hain kuki virtual populate kiye hain comment model me
+        
+
         // console.log(blog);
         // res.json({blog});
         res.status(200).json({

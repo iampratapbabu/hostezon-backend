@@ -20,7 +20,6 @@ router.route('/:slug')
 	.get(blogController.getBlog)   //isme findOneAndUpdate({slug:req.params.slug}) use krenge jisme object ki tarah 
 	.patch(blogController.updateBlog)  //parameter pass krte hai eb.
 	
-
 router.route('/single/:id')    //agar id se search karna chahte hain then ise use kr skte haint
  	.get(blogController.getSingleBlog)     //isme Blog.findByIdAndUpdate() use krenge
 	.patch(blogController.updateSingleBlog)  

@@ -29,7 +29,7 @@ const sendEMail = async options =>{
 
 	//define the email options
 	const mailOptions = {
-		from:'hosteZON <hosezon@yahoo.com>',
+		from:'hosteZON <hostezon@yahoo.com>',
 		to:options.email,
 		subject:options.subject,
 		text:options.message
