@@ -31,10 +31,10 @@ const userSchema = new mongoose.Schema({
       message: "Password Do Not Match",
     },
   },
-  gender: {
-    type: String,
-    required: [true, "Please Select Your gender"],
-  },
+  // gender: {
+  //   type: String,
+  //   required: [true, "Please Select Your gender"],
+  // },
   role:{
     type:String,
     enum:['user','developer','admin'],

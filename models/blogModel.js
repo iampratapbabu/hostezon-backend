@@ -47,14 +47,7 @@ const blogSchema = new mongoose.Schema({
          type:mongoose.Schema.Types.ObjectId,
          ref:'User'
     },
-    likes:[
-        {
-            user:{
-                type:mongoose.Schema.Types.ObjectId,
-                ref:'User',
-            }
-        }
-    ]
+
     
    
 
@@ -74,17 +67,22 @@ blogSchema.virtual('comments',{
     localField:'_id'
 });
 
+//iske alawa get blog wale controller pe .populate('comments'); lagana hoga 
 
 
 
-//user populating
+
+// user populating
 blogSchema.pre(/^find/,function(next){
     this.populate({
         path:'createdBy',
-        select:'-__v -email -gender'
+        select:'-__v -email -gender'  //minus ka sign lagake likhe hain means insb ko jaise email , gender ko selet nhi krega during populating time
     });
     next();
 });
+
+//nhi to iske alawa direct .populate('createdBt') laga skte hai get blog wale controller pr
+//but ye jyada convinient rehta hai 
 
 
 
