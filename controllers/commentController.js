@@ -3,7 +3,7 @@ const Comment = require('../models/commentsModel');
 exports.getAllComment = async(req,res) =>{
 	try{
 		let filter = {};
-		if(req.params.blogId) filter = {blog:req.params.blogId}; //agar blogId hoga then bs 
+		 if(req.params.blogId) filter = {blog:req.params.blogId}; //agar blogId hoga then bs 
 															     //usi blog ka comment find krega
 		const comments = await Comment.find(filter);
 		res.status(200).json({
