@@ -17,8 +17,6 @@ router.route("/signup").post(authController.signup);
 router.route("/login").post(authController.login);
 router.route("/logout").get(authController.logout);
 
-//These routes are mainly for development
-router.route('/test-route').get(authController.protect,authController.testRoute);
 
 
 //in routes ko jinme / ya /:id type ke ho inko neche rakha jata hai

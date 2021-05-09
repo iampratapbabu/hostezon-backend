@@ -126,24 +126,9 @@ exports.protect = async (req, res, next) => {
   }
 };
 
-exports.testRoute = (req,res) =>{
-  try{
-     res.status(200).json({
-      msg:"success this is test route"
-     })
-     console.log("done in test route");
-  }catch(err){
-    console.log(err);
-     res.status(400).json({
 
-      status: "fail",
-      message: err,
-    });
-  }
- 
-}
 
-//in dono controllers ke jagah protect middleware hi kaam aayega usi se req.user.role extract kar
+//in dono middlewares controllers ke jagah protect middleware hi kaam aayega usi se req.user.role extract kar
 //lenge jahan jaroorat hogi
 
 // exports.isAdmin = async(req,res,next) =>{
