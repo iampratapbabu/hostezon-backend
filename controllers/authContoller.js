@@ -58,6 +58,7 @@ exports.login = async (req, res, next) => {
     res.status(200).json({
       status:"success",
       token,
+      
     });
 
     next();
@@ -83,9 +84,13 @@ exports.logout = (req, res) => {
 exports.protect = async (req, res, next) => {
   try {
     let token;
-    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-      token = req.headers.authorization.split(' ')[1];
-    }
+    // if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+    //   token = req.headers.authorization.split(' ')[1];  
+    //}   //ye method use krenge jab Authorization Bearer token wala method use krenge
+
+    token = req.header('x-auth-token');  //is wale method me x-auth-token header ke through token le rhe hai
+    //token lene ka tarika change hua hai baki sb same hai
+
     if(!token){
       return res.status(403).json({
         status:"fail",
@@ -114,6 +119,7 @@ exports.protect = async (req, res, next) => {
         message:"passsword changed please login again"
       })
     }
+   
   req.user = currentUser;
   // console.log("req finished of protect");
   next();

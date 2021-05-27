@@ -16,7 +16,7 @@ mongoose
     console.log("database connected successfully");
   });
 
-port = 8000 || process.env.PORT;
+port = process.env.PORT || 8000;
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
 });

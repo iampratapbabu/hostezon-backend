@@ -7,7 +7,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 
-
+//routes
 const userRouter = require("./routes/userRoute");
 const blogRouter = require("./routes/blogRoute");
 const commentRouter = require('./routes/commentRoute');
@@ -42,9 +42,10 @@ app.use('/hostezon',limiter); //hostezon ke baad se harek url pe ye apply ho gya
 //for making request without error with react
 //in official language called cors error handling
 app.use((req,res,next) =>{
+	//res.header("Access-Control-Allow-Credentials","true");
 	res.header("Access-Control-Allow-Origin","*");
-	res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept,Authorization");
-	res.header("Access-Control-Allow-Methods","GET,POST,PUT,PATCH,DELETE");
+	res.header("Access-Control-Allow-Headers","Origin, X-Requested-With,x-auth-token, Content-Type, Accept,Authorization");
+	res.header("Access-Control-Allow-Methods","GET,OPTIONS,POST,PUT,PATCH,DELETE");
 	next();
 });
 

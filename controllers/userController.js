@@ -17,6 +17,18 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
+exports.getSingleUser = async(req,res) =>{
+  try{
+    const user = await User.findById(req.user.id).select('-password');  //req.user protect middleware se aa rha hai
+    res.json(user);
+  }catch(error){
+    res.status(400).json({
+      status:"fail",
+      message:error
+    })
+  }
+}
+
 
 
 exports.getUser = async (req, res) => {

@@ -81,7 +81,7 @@ blogSchema.pre(/^find/,function(next){
     next();
 });
 
-//nhi to iske alawa direct .populate('createdBt') laga skte hai get blog wale controller pr
+//nhi to iske alawa direct .populate('createdBy') laga skte hai get blog wale controller pr
 //but ye jyada convinient rehta hai 
 
 

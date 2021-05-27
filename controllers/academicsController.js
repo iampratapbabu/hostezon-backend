@@ -24,6 +24,11 @@ exports.singleBranch = async(req,res) =>{
 			year:req.params.year,
 			semester:req.params.semester
 		});
+		if(!branch){
+			res.status(400).json({
+				msg:"There is no Branh related to this"
+			})
+		}
 		res.status(200).json({
 		status:"success",
 		results:branch.length,
