@@ -1,10 +1,10 @@
 {
   "name": "hostezon",
   "version": "1.0.0",
-  "description": "An App to help",
+  "description": "An App to help students",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "Tej Pratap",
   "license": "ISC",

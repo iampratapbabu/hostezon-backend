@@ -12,11 +12,11 @@ const userRouter = require("./routes/userRoute");
 const blogRouter = require("./routes/blogRoute");
 const commentRouter = require('./routes/commentRoute');
 const academicsRouter = require("./routes/academicsRoute");
-const learningRouter = require("./routes/learningRoute");
 
 
 
-const app = express();
+
+const app = express(); //all functions of express in app
 app.use(express.json()); //very necessary
 
 app.use(mongoSanitize()); //data sanitization prevents sql injection
@@ -37,7 +37,7 @@ const limiter = rateLimit({
 	message:"Too Many Requests from this IP Please try again in an hour"
 });
 
-app.use('/hostezon',limiter); //hostezon ke baad se harek url pe ye apply ho gya
+app.use('/app',limiter); //hostezon ke baad se harek url pe ye apply ho gya
 
 //for making request without error with react
 //in official language called cors error handling
@@ -50,17 +50,17 @@ app.use((req,res,next) =>{
 });
 
 
-app.get("/hostezon/v1", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hostezon (v1.0) Backend by - Tej Pratap");
 });
 
 
 //all router files
-app.use("/hostezon/v1/users", userRouter);      	//common users
-app.use("/hostezon/v1/blogs", blogRouter);  		//hosteZON-blogs
-app.use("/hostezon/v1/comments",commentRouter);		//comment router
-app.use("/hostezon/v1/academics",academicsRouter);  //hosteZON-academics
-app.use("/hostezon/v1/learning",learningRouter);   //Learning Router
+app.use("/app/v1/users", userRouter);      	//common users
+app.use("/app/v1/blogs", blogRouter);  		//hosteZON-blogs
+app.use("/app/v1/comments",commentRouter);		//comment router
+app.use("/app/v1/academics",academicsRouter);  //hosteZON-academics
+
 
 
 module.exports = app;

@@ -2,7 +2,6 @@ const User = require("../models/userModel");
 const jwt = require('jsonwebtoken');
 const {promisify} = require('util');
 const crypto = require('crypto');
-
 const sendEmail = require('../utils/email');
 
 
@@ -39,7 +38,7 @@ exports.login = async (req, res, next) => {
   try {
     const {email, password} = req.body;
     if(!email || !password){
-      return res.status(403).json({
+      return res.status(404).json({
         status:"fail",
         message:"No User or Password"
       });
@@ -92,7 +91,7 @@ exports.protect = async (req, res, next) => {
     //token lene ka tarika change hua hai baki sb same hai
 
     if(!token){
-      return res.status(403).json({
+      return res.status(404).json({
         status:"fail",
         message:"Token not found"
       });
@@ -225,16 +224,16 @@ if(!user){
 
 //generating reset resetToken
 const resetToken = user.createPasswordResetToken();
-
 await user.save({validateBeforeSave:false})
 
-//sending to user's email
+//creating email content
 const resetUrl = `${req.protocol}://${req.get('host')}/hostezon/v1/users/reset-password/${resetToken}`;
-
 const message = `Forgot your password Click here to Reset ${resetUrl}.\n if You dont  then ignore`;
 
 
 try{
+
+  //sending email to user
   await sendEmail({
     email:user.email,
     subject:"Your Password reset token",

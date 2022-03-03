@@ -52,7 +52,7 @@ const blogSchema = new mongoose.Schema({
    
 
     
-}, //ye hemsa yahin likhte hain kuki ye kisi model ka part nhi
+}, //ye hemsa yahin likhte hain kuki ye kisi model ka part nhi jb virtual populate krte hain to
    {
         toJSON:{virtuals:true},
         toObject:{virtuals:true}
@@ -76,7 +76,7 @@ blogSchema.virtual('comments',{
 blogSchema.pre(/^find/,function(next){
     this.populate({
         path:'createdBy',
-        select:'-__v -email -gender'  //minus ka sign lagake likhe hain means insb ko jaise email , gender ko selet nhi krega during populating time
+        select:'-__v -email -gender'  //minus ka sign lagake likhe hain means insb ko jaise email,gender ko selet nhi krega during populating time
     });
     next();
 });

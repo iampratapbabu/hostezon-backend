@@ -2,8 +2,7 @@ const express = require("express");
 const authController = require('../controllers/authContoller');
 const blogController = require("../controllers/blogController");
 
-const commentRouter = require('../routes/commentRoute');     //yaha pe router.use as a middleware use krenge 
-															//jaisa app.js me kiya tha baki routes me
+const commentRouter = require('../routes/commentRoute');     //yaha pe router.use as a middleware use krenge 															//jaisa app.js me kiya tha baki routes me
 const router = express.Router();
 
 

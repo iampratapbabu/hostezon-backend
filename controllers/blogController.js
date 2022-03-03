@@ -18,8 +18,6 @@ exports.getAllBlogs = async (req,res) =>{
         //getting query
         const queryObj = {...req.query};
 
-        
-
         const excludedFields = ['page', 'sort', 'limit', 'fields'];
         excludedFields.forEach((el) => delete queryObj[el]);
 
@@ -27,7 +25,7 @@ exports.getAllBlogs = async (req,res) =>{
         let queryStr = JSON.stringify(queryObj);
         queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
 
-        //main query executing from here 
+        //main query executing from here
         //parsing is necessary otherwise query become undefined
         let query = Blog.find(JSON.parse(queryStr));
 
@@ -50,7 +48,7 @@ exports.getAllBlogs = async (req,res) =>{
         const skip = (page - 1) * limit;
         query = query.skip(skip).limit(limit);
 
-        
+
         const blogs = await query;
         res.status(200).json({
             status:"success",
@@ -102,15 +100,15 @@ exports.createBlog = async (req,res) =>{
 
 exports.getSingleBlog = async (req,res) =>{
     try{
-         
+
         const blog = await Blog.findById(req.params.id).populate('comments');
         //const blog = await Blog.findOne({slug:req.params.slug});
         //second method to find by name, slug or something
 
         // yaha se bhi populate kar skte hain  .populate('createdBy') laga ke
         //bt createdBy direct blog model se populate ho rha hai
-        
-        
+
+
 
         // console.log(blog);
         // res.json({blog});
@@ -118,7 +116,7 @@ exports.getSingleBlog = async (req,res) =>{
             status:"succc555ess",
             blog
         });
-       
+
     }catch (error) {
         res.status(400).json({
             status:"fail",
@@ -149,7 +147,7 @@ exports.updateSingleBlog = async (req,res) =>{
             status:"succc555ess",
             blog
         });
-       
+
     }catch (error) {
         res.status(400).json({
             status:"fail",
@@ -171,9 +169,9 @@ exports.deleteSingleBlog = async (req,res) =>{
         // res.json({blog});
         res.status(200).json({
             status:"succc555ess",
-            
+
         });
-       
+
     }catch (error) {
         res.status(400).json({
             status:"fail",
@@ -182,4 +180,3 @@ exports.deleteSingleBlog = async (req,res) =>{
         });
     }
 }
-
