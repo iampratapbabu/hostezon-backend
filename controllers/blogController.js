@@ -149,7 +149,7 @@ exports.updateSingleBlog = async (req,res) =>{
         });
 
     }catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             status:"fail",
             message:"Error occured code directly runs in catch block",
             Error:error

@@ -12,7 +12,7 @@ exports.getAll = async(req,res) =>{
 		})
 
 	}catch(err){
-		res.status(400).send("SERVER ERROR")
+		res.status(500).send("SERVER ERROR")
 	}
 }
 
@@ -21,12 +21,11 @@ exports.singleBranch = async(req,res) =>{
 		
 		const branch = await Academics.find({
 			branch:req.params.branch,
-			year:req.params.year,
 			semester:req.params.semester
 		});
 		if(!branch){
-			res.status(400).json({
-				msg:"There is no Branh related to this"
+			res.status(404).json({
+				msg:"There is no Branch related to this"
 			})
 		}
 		res.status(200).json({
@@ -83,7 +82,7 @@ exports.createOne = async(req,res) =>{
 		});
 
 	}catch(err){
-		res.status(400).send("SERVER ERROR");
+		res.status(500).send("SERVER ERROR");
 	}
 }
 

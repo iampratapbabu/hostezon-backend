@@ -11,7 +11,7 @@ router.route('/syllabus')
 .get(academicsController.getAll)
 .post(academicsController.createOne);
 
-router.route('/:branch/:year/:semester')
+router.route('/:branch/:semester')
 	.get(academicsController.singleBranch)
 	.patch(academicsController.updateSingleBranch);
 
